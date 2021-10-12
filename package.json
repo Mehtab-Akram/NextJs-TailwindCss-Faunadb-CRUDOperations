@@ -3,18 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.0",
+    "faunadb": "^4.4.1",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.17.1",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
+    "autoprefixer": "^10.3.6",
     "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2"
+    "eslint-config-next": "11.1.2",
+    "postcss": "^8.3.8",
+    "postcss-preset-env": "^6.7.0",
+    "tailwindcss": "^2.2.16"
   }
 }
