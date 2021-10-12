@@ -27,13 +27,13 @@ const createUser = async (firstName,lastName,emailAddress) => {
             data:{firstName,lastName,emailAddress}
         })) 
    };
-const getSnippetById = async (id) => {
-    const snippit = await faunaClient.query(
-        q.Get(q.Ref(q.Collection('snippits'),id))
+const getUserById = async (id) => {
+    const User = await faunaClient.query(
+        q.Get(q.Ref(q.Collection('Users'),id))
         );
-        snippit.id = snippit.ref.id;
-        delete snippit.ref;
-        return snippit; 
+        User.id = User.ref.id;
+        delete User.ref;
+        return User; 
 };
 
 
@@ -52,7 +52,7 @@ const deleteUser = async (id) => {
 module.exports = {
     createUser,
     getUsers,
-    getSnippetById,
+    getUserById,
     updateUser,
     deleteUser,
 };
