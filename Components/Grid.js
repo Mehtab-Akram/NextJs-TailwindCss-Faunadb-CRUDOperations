@@ -1,16 +1,17 @@
 import { useSWRConfig } from 'swr';
+import { trackPromise } from 'react-promise-tracker';
 
 export default function Grid({deletedUser,setUser, users}) {
   const { mutate } = useSWRConfig()
   const deleteUser = async (user) => {
     try {
-        let dataa = await fetch('/api/deleteUser',{
+        let dataa = await trackPromise(fetch('/api/deleteUser',{
             method:'DELETE',
             body: JSON.stringify({id : user.id}),
             headers:{
                 'Content-Type':'application/json',
             },
-        }).then((res)=>{
+        })).then((res)=>{
           if(res.status === 200){
             mutate('/api/users');
           }

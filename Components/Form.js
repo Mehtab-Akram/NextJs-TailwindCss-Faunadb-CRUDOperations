@@ -2,6 +2,7 @@ import {useForm} from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { useSWRConfig } from 'swr';
 import { useEffect } from 'react';
+import { trackPromise } from 'react-promise-tracker';
 export default function Form({user, setUser}) {
   const { mutate } = useSWRConfig()
     const {register,handleSubmit,reset,formState: { errors }} = useForm({
@@ -21,14 +22,14 @@ export default function Form({user, setUser}) {
       const {firstName, lastName, emailAddress} = data;
       const id = user.id;
       try {
-          await fetch('/api/updateUser',
+          await trackPromise (fetch('/api/updateUser',
           {
               method : 'PUT',
               body : JSON.stringify({firstName, lastName, emailAddress,id}),
               headers : {
                   'Content-Type': 'application/json',
               },
-          }).then((res)=>{
+          })).then((res)=>{
             if(res.status === 200){
               setUser({});
               reset({firstName:'',lastName:'',emailAddress:''},false);
@@ -46,13 +47,13 @@ export default function Form({user, setUser}) {
     
       try {
         const {firstName, lastName, emailAddress} = data;
-        await fetch('/api/createUser',{
+        await trackPromise(fetch('/api/createUser',{
           method : 'POST',
           body : JSON.stringify({firstName,lastName,emailAddress}),
           headers:{
             'Content-Type': 'application/json'
           }
-        }).then((res)=>{
+        })).then((res)=>{
           if(res.status === 200){
             reset({firstName:'',lastName:'',emailAddress:''},false);
             mutate('/api/users');

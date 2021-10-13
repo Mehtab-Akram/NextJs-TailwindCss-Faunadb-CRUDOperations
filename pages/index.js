@@ -2,9 +2,11 @@ import Form from '../Components/Form'
 import Grid from '../Components/Grid'
 import useSWR, { mutate } from 'swr';
 import { useState } from 'react';
-
+import { usePromiseTracker } from 'react-promise-tracker';
+import { trackPromise } from 'react-promise-tracker';
+import LoadingIndicator from '../Components/LoadingIndicator';
 const fetcher = async ()=>{
-  const response = await fetch ('/api/users');  
+  const response = await trackPromise (fetch ('/api/users'));  
   const data = await response.json();
   return data;
 }
@@ -18,7 +20,8 @@ const [user,setUser] = useState({});
      <main >
        <Form user = {user}  setUser={setUser}/>
        
-       {users && users !== [] ? <Grid deletedUser = {mutate} setUser = {setUser} users = {users}/> : ''}       
+       {users && users !== [] ? <Grid deletedUser = {mutate} setUser = {setUser} users = {users}/> : '' }     
+       <LoadingIndicator/>
       </main>
     </div>
   )
